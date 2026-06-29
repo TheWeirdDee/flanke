@@ -4,18 +4,18 @@ import Link from "next/link";
 import Script from "next/script";
 import StepsSection from "@/components/steps-section";
 import VelocityChart from "@/components/velocity-chart";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 const MINT  = "#7ccb9b";
 const PINE  = "#1c6a58";
 const CORAL = "#f8a57d";
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 28 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
 
-const stagger = {
+const stagger: Variants = {
   visible: { transition: { staggerChildren: 0.12 } },
 };
 
