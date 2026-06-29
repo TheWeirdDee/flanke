@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Script from "next/script";
 import StepsSection from "@/components/steps-section";
-import VelocityChart from "@/components/velocity-chart";
 import { motion, type Variants } from "framer-motion";
 
 const MINT  = "#7ccb9b";
@@ -334,9 +333,19 @@ export default function LandingPage() {
               </p>
             </div>
 
-            {/* Right Chart Column — Recharts Area Chart */}
-            <div className="flex-1 min-h-[320px] border-t md:border-t-0 md:border-l border-white/10 relative bg-[#08080b]/55 overflow-hidden">
-              <VelocityChart />
+            {/* Right Column — Lottie Analytics Animation */}
+            <div className="flex-1 min-h-[360px] border-t md:border-t-0 md:border-l border-white/10 relative bg-[#07070a]/70 overflow-hidden flex items-center justify-center">
+              {/* Mint radial glow behind animation */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="w-64 h-64 rounded-full blur-[80px] bg-[#7ccb9b]/10" />
+              </div>
+              {/* Lottie animation */}
+              <div
+                className="relative z-10 w-full h-full flex items-center justify-center p-4"
+                dangerouslySetInnerHTML={{
+                  __html: `<dotlottie-wc src="https://lottie.host/470d9c6b-6d55-4314-b9d9-aa6aadf1e051/nfKuTIpNmv.lottie" style="width:100%;height:340px;max-width:480px" autoplay loop></dotlottie-wc>`
+                }}
+              />
             </div>
           </motion.div>
 
