@@ -3,10 +3,21 @@
 import Link from "next/link";
 import Script from "next/script";
 import StepsSection from "@/components/steps-section";
+import VelocityChart from "@/components/velocity-chart";
+import { motion } from "framer-motion";
 
 const MINT  = "#7ccb9b";
 const PINE  = "#1c6a58";
 const CORAL = "#f8a57d";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const stagger = {
+  visible: { transition: { staggerChildren: 0.12 } },
+};
 
 export default function LandingPage() {
   return (
@@ -20,7 +31,12 @@ export default function LandingPage() {
       />
 
       {/* ── 1. NAV ─────────────────────────────────────────────────────────── */}
-      <nav className="fixed w-full top-0 z-50 bg-[#060608]/75 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/10">
+      <motion.nav
+        initial={{ opacity: 0, y: -16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="fixed w-full top-0 z-50 bg-[#060608]/75 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/10"
+      >
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 lg:px-8 py-4">
           <Link href="/" className="flex items-center gap-2.5 hover:opacity-90 transition-opacity">
             {/* Logo consisting of two rectangular bars and a coral flame replacing the dot */}
@@ -56,21 +72,26 @@ export default function LandingPage() {
             </Link>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* ── 2. HERO ────────────────────────────────────────────────────────── */}
       <section className="relative mx-auto max-w-7xl px-6 lg:px-8 pt-24 pb-20 lg:pt-28 lg:pb-32 flex flex-col lg:flex-row items-center gap-12">
         
         {/* Left Content */}
-        <div className="flex-1 max-w-[600px] z-10">
-          {/* Badge text made smaller as requested */}
-          <div className="inline-flex items-center rounded-2xl px-3 py-1 text-[10px] font-semibold uppercase tracking-widest mb-6 border border-emerald-500/20 bg-emerald-500/10 text-emerald-400 backdrop-blur-sm">
+        <motion.div
+          className="flex-1 max-w-[600px] z-10"
+          initial="hidden"
+          animate="visible"
+          variants={stagger}
+        >
+          {/* Badge */}
+          <motion.div variants={fadeUp} className="inline-flex items-center rounded-2xl px-3 py-1 text-[10px] font-semibold uppercase tracking-widest mb-6 border border-emerald-500/20 bg-emerald-500/10 text-emerald-400 backdrop-blur-sm">
             Competitive Intelligence Platform
-          </div>
+          </motion.div>
 
           {/* Large eye icon below badge has been removed as requested */}
 
-          <h1 className="text-[42px] lg:text-[50px] leading-[1.1] font-extrabold tracking-tight mb-6 text-white">
+          <motion.h1 variants={fadeUp} className="text-[42px] lg:text-[50px] leading-[1.1] font-extrabold tracking-tight mb-6 text-white">
             Your competitors are moving. <br/>
             <span className="text-slate-400">You're not watching.</span> <br/>
             <span className="inline-flex items-center gap-3">
@@ -78,24 +99,29 @@ export default function LandingPage() {
               {/* Lottie eye animation next to 'we can' text is made bigger (96x96px) */}
               <span className="w-24 h-24 inline-block align-middle ml-2" dangerouslySetInnerHTML={{ __html: `<dotlottie-wc src="https://lottie.host/5a061fba-35b6-48ff-9582-da381d506cbe/Kgo9HKL584.lottie" style="width: 96px; height: 96px;" autoplay loop></dotlottie-wc>` }} />
             </span>
-          </h1>
+          </motion.h1>
 
-          <p className="text-[17px] leading-relaxed text-slate-400 mb-10 max-w-[500px]">
+          <motion.p variants={fadeUp} className="text-[17px] leading-relaxed text-slate-400 mb-10 max-w-[500px]">
             Flanke monitors competitor pages around the clock, detects every change, and classifies what it means — pricing pressure, feature threat, talent raid, messaging shift — before your next sales call.
-          </p>
+          </motion.p>
 
-          <div className="flex items-center gap-4">
+          <motion.div variants={fadeUp} className="flex items-center gap-4">
             <Link href="/signup" className="rounded-md px-8 py-3.5 text-[16px] font-bold text-white transition-all bg-gradient-to-r from-[#1c6a58] to-[#24826d] hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#1c6a58]/30 shadow-lg shadow-[#1c6a58]/20">
               Start Monitoring Free
             </Link>
             <Link href="#pricing" className="rounded-md px-8 py-3.5 text-[16px] font-bold text-slate-300 bg-white/5 border border-white/10 hover:bg-white/10 hover:text-white transition-all backdrop-blur-md">
               View Pricing
             </Link>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        {/* Right UI Briefing Panel - Wide cards with detailed competitor intel briefing content */}
-        <div className="flex-1 relative w-full lg:h-[550px] hidden md:block animate-fade-in-up">
+        {/* Right UI Briefing Panel */}
+        <motion.div
+          className="flex-1 relative w-full lg:h-[550px] hidden md:block"
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        >
           {/* Subtle green background glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] rounded-full blur-[100px] -z-10 bg-[#7ccb9b]/12" />
           
@@ -156,12 +182,15 @@ export default function LandingPage() {
               <p className="text-[11px] text-slate-300 mt-0.5">NoteApp velocity score spiked to <strong className="text-[#7ccb9b]">94</strong>.</p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ── 3. LOGOS ───────────────────────────────────────────────────────── */}
       {/* Grayscale invert removed to make logos visible as white/silver on dark background */}
-      <section className="py-10 border-y border-white/5 bg-black/20 text-slate-400">
+      <motion.section
+        className="py-10 border-y border-white/5 bg-black/20 text-slate-400"
+        initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+      >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
           <p className="text-xs font-semibold text-slate-500 mb-8 uppercase tracking-widest">Trusted by modern sales teams</p>
           <div className="flex flex-wrap justify-center items-center gap-12 lg:gap-24 opacity-60">
@@ -170,7 +199,7 @@ export default function LandingPage() {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ── 4. HOW IT WORKS ────────────────────────────────────────────────── */}
       <StepsSection />
@@ -180,7 +209,10 @@ export default function LandingPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 border border-white/10 rounded-3xl bg-[#09090b]/40 backdrop-blur-md overflow-hidden">
           
           {/* Row 1, Left (Top-Left): Automated Monitoring */}
-          <div className="p-6 md:p-10 border-b border-white/10 md:border-r flex flex-col justify-between min-h-[460px] relative group">
+          <motion.div
+            className="p-6 md:p-10 border-b border-white/10 md:border-r flex flex-col justify-between min-h-[460px] relative group"
+            initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} variants={fadeUp}
+          >
             {/* Glow shadow with app color (Coral) */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full blur-[80px] bg-[#f8a57d]/8 opacity-40 pointer-events-none group-hover:opacity-80 transition-opacity duration-500" />
             
@@ -217,10 +249,14 @@ export default function LandingPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
           
           {/* Row 1, Right (Top-Right): AI Classification */}
-          <div className="p-6 md:p-10 border-b border-white/10 flex flex-col justify-between min-h-[460px] relative group">
+          <motion.div
+            className="p-6 md:p-10 border-b border-white/10 flex flex-col justify-between min-h-[460px] relative group"
+            initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} variants={fadeUp}
+            transition={{ delay: 0.1 }}
+          >
             {/* Glow shadow with app color (Mint) */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full blur-[80px] bg-[#7ccb9b]/8 opacity-40 pointer-events-none group-hover:opacity-80 transition-opacity duration-500" />
 
@@ -275,10 +311,13 @@ export default function LandingPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
           
           {/* Row 2 (Middle-Full): Competitor Analytics / Velocity Trend */}
-          <div className="col-span-1 md:col-span-2 border-b border-white/10 flex flex-col md:flex-row min-h-[400px] relative group overflow-hidden">
+          <motion.div
+            className="col-span-1 md:col-span-2 border-b border-white/10 flex flex-col md:flex-row min-h-[400px] relative group overflow-hidden"
+            initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} variants={fadeUp}
+          >
             {/* Glow shadow (Mint) */}
             <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-[90px] bg-[#7ccb9b]/5 opacity-50 pointer-events-none group-hover:opacity-75 transition-opacity duration-500" />
 
@@ -295,58 +334,17 @@ export default function LandingPage() {
               </p>
             </div>
 
-            {/* Right Chart Column (Divided by border-l matching the autoscale layout) */}
-            <div className="flex-1 min-h-[300px] border-t md:border-t-0 md:border-l border-white/10 relative bg-[#08080b]/55 overflow-hidden flex items-center justify-center">
-              
-              {/* Vector Grid Background & Smooth Spline Graph Path (No Purple, stick to MINT/PINE) */}
-              <div className="absolute inset-0 w-full h-full">
-                <svg width="100%" height="100%" className="absolute inset-0">
-                  <defs>
-                    <pattern id="chart-grid-pat" width="35" height="35" patternUnits="userSpaceOnUse">
-                      <path d="M 35 0 L 0 0 0 35" fill="none" stroke="#7ccb9b" strokeOpacity="0.06" strokeWidth="1" />
-                    </pattern>
-                    <linearGradient id="glow-grad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#7ccb9b" stopOpacity="0.16" />
-                      <stop offset="100%" stopColor="#7ccb9b" stopOpacity="0" />
-                    </linearGradient>
-                  </defs>
-                  
-                  {/* Grid Lines */}
-                  <rect width="100%" height="100%" fill="url(#chart-grid-pat)" />
-                  
-                  {/* Spline area fill */}
-                  <path 
-                    d="M -20,220 C 40,210 60,140 100,160 C 140,180 180,90 220,110 C 260,130 280,60 320,50 C 360,40 380,80 440,30 L 440,300 L -20,300 Z" 
-                    fill="url(#glow-grad)" 
-                    stroke="none"
-                  />
-
-                  {/* Spline border line */}
-                  <path 
-                    d="M -20,220 C 40,210 60,140 100,160 C 140,180 180,90 220,110 C 260,130 280,60 320,50 C 360,40 380,80 440,30" 
-                    fill="none" 
-                    stroke="#7ccb9b" 
-                    strokeWidth="2.5" 
-                    className="opacity-80"
-                  />
-                  
-                  {/* Animated end target dots */}
-                  <circle cx="320" cy="50" r="3.5" fill="#7ccb9b" />
-                  <circle cx="320" cy="50" r="7" fill="#7ccb9b" fillOpacity="0.3" className="animate-ping" />
-                </svg>
-              </div>
-
-              {/* Floating Metric Badge (Matching the instance type box from autoscale section) */}
-              <div className="absolute top-1/2 left-[10%] -translate-y-1/2 bg-[#09090c]/95 border border-emerald-500/25 px-4 py-3 rounded-lg shadow-2xl backdrop-blur-md z-20">
-                <span className="text-[9px] font-bold text-slate-500 block tracking-wider uppercase">WORKSPACE METRIC</span>
-                <span className="text-white font-black text-xs block mt-1">VELOCITY SCORE</span>
-                <span className="text-[#7ccb9b] font-mono text-[11px] block font-bold mt-0.5">94 / 100 SPIKE</span>
-              </div>
+            {/* Right Chart Column — Recharts Area Chart */}
+            <div className="flex-1 min-h-[320px] border-t md:border-t-0 md:border-l border-white/10 relative bg-[#08080b]/55 overflow-hidden">
+              <VelocityChart />
             </div>
-          </div>
+          </motion.div>
 
           {/* Row 3, Left (Bottom-Left): Sales Enablement Alerts */}
-          <div className="p-6 md:p-10 border-b md:border-b-0 md:border-r border-white/10 flex flex-col justify-between min-h-[460px] relative group">
+          <motion.div
+            className="p-6 md:p-10 border-b md:border-b-0 md:border-r border-white/10 flex flex-col justify-between min-h-[460px] relative group"
+            initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} variants={fadeUp}
+          >
             {/* Glow shadow with app color (Mint) */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full blur-[80px] bg-[#7ccb9b]/8 opacity-40 pointer-events-none group-hover:opacity-80 transition-opacity duration-500" />
 
@@ -379,10 +377,14 @@ export default function LandingPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
           
           {/* Row 3, Right (Bottom-Right): Instant Battlecards */}
-          <div className="p-6 md:p-10 flex flex-col justify-between min-h-[460px] relative group">
+          <motion.div
+            className="p-6 md:p-10 flex flex-col justify-between min-h-[460px] relative group"
+            initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} variants={fadeUp}
+            transition={{ delay: 0.1 }}
+          >
             {/* Glow shadow with app color (Coral) */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full blur-[80px] bg-[#f8a57d]/8 opacity-40 pointer-events-none group-hover:opacity-80 transition-opacity duration-500" />
 
@@ -417,23 +419,28 @@ export default function LandingPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
           
         </div>
       </section>
 
       {/* ── 6. PRICING ─────────────────────────────────────────────────────── */}
-      <section id="pricing" className="py-16 md:py-32 bg-[#060608] border-t border-white/5">
+      <motion.section id="pricing" className="py-16 md:py-32 bg-[#060608] border-t border-white/5" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-10 md:mb-20">
+          <motion.div
+            className="text-center max-w-2xl mx-auto mb-10 md:mb-20"
+            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+          >
             <h2 className="text-4xl font-bold text-white mb-4">Pricing that scales with you</h2>
             <p className="text-lg text-slate-400">Start monitoring your biggest threats for free. Upgrade when you need hourly checks and team collaboration.</p>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-            
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center"
+            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}
+          >
             {/* Starter Plan */}
-            <div className="bg-[#0d0d11]/70 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-2xl hover:border-white/20 hover:bg-[#121217]/85 transition-all duration-300">
+            <motion.div variants={fadeUp} className="bg-[#0d0d11]/70 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-2xl hover:border-white/20 hover:bg-[#121217]/85 transition-all duration-300">
               <h3 className="text-xl font-bold text-white mb-2">Starter</h3>
               <div className="flex items-baseline gap-2 mb-4">
                 <span className="text-4xl font-extrabold text-white">$0</span>
@@ -448,10 +455,10 @@ export default function LandingPage() {
               <Link href="/signup" className="block w-full py-3 rounded-md text-center font-bold text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
                 Start Free
               </Link>
-            </div>
+            </motion.div>
 
-            {/* Pro Plan - Removed purple color highlights and set to green/coral theme */}
-            <div className="rounded-3xl p-8 shadow-2xl border border-emerald-500/20 shadow-emerald-950/20 transform md:-translate-y-4 relative bg-gradient-to-b from-[#1c6a58] to-[#144f41]">
+            {/* Pro Plan */}
+            <motion.div variants={fadeUp} className="rounded-3xl p-8 shadow-2xl border border-emerald-500/20 shadow-emerald-950/20 transform md:-translate-y-4 relative bg-gradient-to-b from-[#1c6a58] to-[#144f41]">
               <span className="absolute -top-4 left-1/2 -translate-x-1/2 text-[11px] font-bold uppercase tracking-wider py-1 px-3 rounded-full bg-[#f8a57d] text-white">
                 Most Popular
               </span>
@@ -470,10 +477,10 @@ export default function LandingPage() {
               <Link href="/signup" className="block w-full py-3 rounded-md text-center font-bold transition-all bg-white hover:bg-slate-50 hover:shadow-xl hover:shadow-emerald-950/30" style={{ color: PINE }}>
                 Get Pro
               </Link>
-            </div>
+            </motion.div>
 
             {/* Enterprise Plan */}
-            <div className="bg-[#0d0d11]/70 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-2xl hover:border-white/20 hover:bg-[#121217]/85 transition-all duration-300">
+            <motion.div variants={fadeUp} className="bg-[#0d0d11]/70 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-2xl hover:border-white/20 hover:bg-[#121217]/85 transition-all duration-300">
               <h3 className="text-xl font-bold text-white mb-2">Enterprise</h3>
               <div className="flex items-baseline gap-2 mb-4">
                 <span className="text-4xl font-extrabold text-white">$99</span>
@@ -488,11 +495,11 @@ export default function LandingPage() {
               <Link href="/login" className="block w-full py-3 rounded-md text-center font-bold text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
                 Contact Sales
               </Link>
-            </div>
+            </motion.div>
 
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ── 7. FOOTER ──────────────────────────────────────────────────────── */}
       <footer id="footer" className="bg-[#040405] border-t border-white/10 pt-24 pb-12">
