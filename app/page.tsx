@@ -326,29 +326,30 @@ export default function LandingPage() {
                 Competitor Analytics
               </span>
               <h2 className="text-3xl font-bold text-white mb-4 leading-tight">
-                Know when rivals move — before your next call.
+                Watch every rival move in real time.
               </h2>
               <p className="text-[14px] text-slate-400 leading-relaxed max-w-md">
-                Flanke monitors competitor pages around the clock and plots change frequency as a live Velocity Score. When a competitor accelerates — new pricing, new features, new messaging — your team gets alerted instantly.
+                Flanke continuously scans competitor URLs and surfaces pricing changes, feature drops, and messaging shifts as they happen — so your sales team always walks into a call with the freshest intel.
               </p>
-              <ul className="mt-6 space-y-2 text-[13px] text-slate-300">
-                <li className="flex items-center gap-2"><span className="text-[#7ccb9b] font-bold">✓</span> 30-day change momentum tracking</li>
-                <li className="flex items-center gap-2"><span className="text-[#7ccb9b] font-bold">✓</span> Real-time Velocity Score alerts</li>
-                <li className="flex items-center gap-2"><span className="text-[#7ccb9b] font-bold">✓</span> Signal classification: pricing, features, talent</li>
+              <ul className="mt-6 space-y-2.5 text-[13px] text-slate-300">
+                <li className="flex items-center gap-2.5"><span className="w-4 h-4 rounded-full bg-[#7ccb9b]/20 border border-[#7ccb9b]/40 flex items-center justify-center text-[#7ccb9b] text-[9px] font-black">✓</span> Live velocity score per competitor</li>
+                <li className="flex items-center gap-2.5"><span className="w-4 h-4 rounded-full bg-[#7ccb9b]/20 border border-[#7ccb9b]/40 flex items-center justify-center text-[#7ccb9b] text-[9px] font-black">✓</span> AI-classified change signals (pricing, features, talent)</li>
+                <li className="flex items-center gap-2.5"><span className="w-4 h-4 rounded-full bg-[#7ccb9b]/20 border border-[#7ccb9b]/40 flex items-center justify-center text-[#7ccb9b] text-[9px] font-black">✓</span> Instant Slack / Teams / webhook alerts</li>
               </ul>
             </div>
 
             {/* Right Column — Lottie Analytics Animation */}
-            <div className="flex-1 min-h-[420px] md:min-h-[480px] border-t md:border-t-0 md:border-l border-white/10 relative bg-[#07070a]/70 overflow-hidden flex items-center justify-center">
-              {/* Mint radial glow behind animation */}
+            <div className="flex-1 min-h-[520px] border-t md:border-t-0 md:border-l border-white/10 relative bg-[#060609]/80 overflow-hidden flex items-stretch">
+              {/* Mint radial glow */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-80 h-80 rounded-full blur-[100px] bg-[#7ccb9b]/12" />
+                <div className="w-96 h-96 rounded-full blur-[120px] bg-[#7ccb9b]/15" />
               </div>
-              {/* Lottie animation — full panel size */}
+              {/* Lottie — recolored to mint via CSS filter, full panel fill */}
               <div
-                className="relative z-10 w-full h-full min-h-[420px] flex items-center justify-center"
+                className="relative z-10 w-full flex items-center justify-center"
+                style={{ filter: "hue-rotate(140deg) saturate(1.4) brightness(0.9)" }}
                 dangerouslySetInnerHTML={{
-                  __html: `<dotlottie-wc src="https://lottie.host/470d9c6b-6d55-4314-b9d9-aa6aadf1e051/nfKuTIpNmv.lottie" style="width:100%;height:100%;min-height:420px" autoplay loop></dotlottie-wc>`
+                  __html: `<dotlottie-wc src="https://lottie.host/470d9c6b-6d55-4314-b9d9-aa6aadf1e051/nfKuTIpNmv.lottie" style="width:100%;height:520px;display:block" autoplay loop></dotlottie-wc>`
                 }}
               />
             </div>
@@ -555,28 +556,28 @@ export default function LandingPage() {
               <h4 className="font-bold text-white mb-6">Product</h4>
               <ul className="space-y-4 text-sm text-slate-400">
                 <li><a href="#features" className="hover:text-white transition-colors">Features</a></li>
-                <li><a href="#how-it-works" className="hover:text-white transition-colors">Integrations</a></li>
+                <li><a href="#how-it-works" className="hover:text-white transition-colors">How it works</a></li>
                 <li><a href="#pricing" className="hover:text-white transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Changelog</a></li>
+                <li><a href="/signup" className="hover:text-white transition-colors">Get started</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-bold text-white mb-6">Company</h4>
+              <h4 className="font-bold text-white mb-6">Account</h4>
               <ul className="space-y-4 text-sm text-slate-400">
-                <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+                <li><a href="/login" className="hover:text-white transition-colors">Sign in</a></li>
+                <li><a href="/signup" className="hover:text-white transition-colors">Create account</a></li>
+                <li><a href="/feed" className="hover:text-white transition-colors">Dashboard</a></li>
+                <li><a href="/settings" className="hover:text-white transition-colors">Settings</a></li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-bold text-white mb-6">Legal</h4>
               <ul className="space-y-4 text-sm text-slate-400">
-                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Security</a></li>
+                <li><a href="/login" className="hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="/login" className="hover:text-white transition-colors">Terms of Service</a></li>
+                <li><a href="/login" className="hover:text-white transition-colors">Security</a></li>
               </ul>
             </div>
           </div>
@@ -584,8 +585,8 @@ export default function LandingPage() {
           <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-slate-500">© 2026 Flanke. All rights reserved.</p>
             <div className="flex gap-4">
-              <div className="w-8 h-8 rounded-md bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:bg-white/10 cursor-pointer">In</div>
-              <div className="w-8 h-8 rounded-md bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:bg-white/10 cursor-pointer">X</div>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-md bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:bg-[#7ccb9b]/10 hover:border-[#7ccb9b]/30 hover:text-[#7ccb9b] transition-all cursor-pointer text-xs font-bold">In</a>
+              <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-md bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:bg-[#7ccb9b]/10 hover:border-[#7ccb9b]/30 hover:text-[#7ccb9b] transition-all cursor-pointer text-xs font-bold">X</a>
             </div>
           </div>
         </div>
