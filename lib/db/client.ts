@@ -644,6 +644,102 @@ export async function tagEvent(
 }
 
 // ─────────────────────────────────────────────
+// Workspace management
+// ─────────────────────────────────────────────
+export async function getWorkspace(workspaceId: string) {
+  const res = await db.send(
+    new GetCommand({
+      TableName: TABLE,
+      Key: {
+        PK: Keys.workspace.pk(workspaceId),
+        SK: Keys.workspace.sk(),
+      },
+    })
+  );
+  return res.Item ?? null;
+}
+
+export async function updateWorkspace(
+  workspaceId: string,
+  updates: { plan?: string; slackWebhookUrl?: string | null; teamsWebhookUrl?: string | null }
+) {
+  const updateExpressions: string[] = [];
+  const expressionNames: Record<string, string> = {};
+  const expressionValues: Record<string, unknown> = {};
+
+  if (updates.plan !== undefined) {
+    updateExpressions.push("#plan = :plan");
+    expressionNames["#plan"] = "plan";
+    expressionValues[":plan"] = updates.plan;
+  }
+  if (updates.slackWebhookUrl !== undefined) {
+    updateExpressions.push("slackWebhookUrl = :slack");
+    expressionValues[":slack"] = updates.slackWebhookUrl;
+  }
+  if (updates.teamsWebhookUrl !== undefined) {
+    updateExpressions.push("teamsWebhookUrl = :teams");
+    expressionValues[":teams"] = updates.teamsWebhookUrl;
+  }
+
+  if (updateExpressions.length === 0) return;
+
+  await db.send(
+    new UpdateCommand({
+      TableName: TABLE,
+      Key: {
+        PK: Keys.workspace.pk(workspaceId),
+        SK: Keys.workspace.sk(),
+      },
+      UpdateExpression: `SET ${updateExpressions.join(", ")}, updatedAt = :now`,
+      ExpressionAttributeNames: Object.keys(expressionNames).length > 0 ? expressionNames : undefined,
+      ExpressionAttributeValues: {
+        ...expressionValues,
+        ":now": new Date().toISOString(),
+      },
+    })
+  );
+}
+
+export async function getWorkspaceMembers(workspaceId: string) {
+  const res = await db.send(
+    new QueryCommand({
+      TableName: TABLE,
+      IndexName: "GSI1",
+      KeyConditionExpression: "GSI1PK = :gsi1pk AND begins_with(GSI1SK, :gsi1sk)",
+      ExpressionAttributeValues: {
+        ":gsi1pk": Keys.userMembership.gsi1pk(workspaceId),
+        ":gsi1sk": "USER#",
+      },
+    })
+  );
+  return res.Items ?? [];
+}
+
+export async function addWorkspaceMember(workspaceId: string, email: string) {
+  const userId = `invited_${randomUUID().slice(0, 8)}`;
+  const now = new Date().toISOString();
+  await db.send(
+    new PutCommand({
+      TableName: TABLE,
+      Item: {
+        PK: Keys.userMembership.pk(userId),
+        SK: Keys.userMembership.sk(workspaceId),
+        GSI1PK: Keys.userMembership.gsi1pk(workspaceId),
+        GSI1SK: Keys.userMembership.gsi1sk(userId),
+        entityType: "USER_MEMBERSHIP",
+        userId,
+        workspaceId,
+        email,
+        role: "MEMBER",
+        joinedAt: now,
+        createdAt: now,
+        updatedAt: now,
+      },
+    })
+  );
+}
+
+// ─────────────────────────────────────────────
 // Worker health (SYSTEM item)
 // ─────────────────────────────────────────────
 export async function updateSystemLastCycle(

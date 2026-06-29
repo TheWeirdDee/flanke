@@ -63,6 +63,28 @@ export function stripDynamic(html: string): string {
     }
   }
 
+  // Remove hidden CSRF meta tags and hidden inputs
+  const hiddenNoise = root.querySelectorAll('meta[name*="csrf" i], input[name*="csrf" i], input[type="hidden"]');
+  for (const el of hiddenNoise) {
+    el.remove();
+  }
+
+  // Strip transient dynamic attributes (random IDs, CSRF, UUIDs) from remaining elements
+  const allElements = root.querySelectorAll("*");
+  for (const el of allElements) {
+    for (const attr of ["id", "class", "name", "value", "action"]) {
+      const val = el.getAttribute(attr);
+      if (val && (
+        /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i.test(val) ||
+        /[0-9a-f]{24,}/i.test(val) ||
+        /csrf/i.test(val) ||
+        /session/i.test(val)
+      )) {
+        el.removeAttribute(attr);
+      }
+    }
+  }
+
   // 2 & 3 — remove cookie/consent/ad/analytics containers.
   for (const selector of NOISE_SELECTORS) {
     try {

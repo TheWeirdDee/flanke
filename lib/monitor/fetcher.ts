@@ -38,14 +38,21 @@ async function fetchOnce(url: string): Promise<{ html: string; status: number }>
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   try {
-    const res = await fetch(url, {
+    const proxyUrl = process.env.SCRAPING_API_URL;
+    const fetchTarget = proxyUrl
+      ? `${proxyUrl}${proxyUrl.includes("?") ? "&" : "?"}url=${encodeURIComponent(url)}`
+      : url;
+
+    const res = await fetch(fetchTarget, {
       signal: controller.signal,
       redirect: "follow",
-      headers: {
-        "User-Agent": USER_AGENT,
-        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-      },
+      headers: proxyUrl
+        ? {}
+        : {
+            "User-Agent": USER_AGENT,
+            Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+          },
     });
 
     // 403 / 429 are treated as active blocking — do not retry.

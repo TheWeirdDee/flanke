@@ -14,6 +14,7 @@ import { fetchUrl, BotBlockError } from "./fetcher";
 import { stripDynamic, MIN_SIGNIFICANT_WORD_CHANGE } from "./stripper";
 import { diffContent } from "./differ";
 import { classifyChange } from "@/lib/ai/classifier";
+import { dispatchWebhookNotifications } from "./notifier";
 import {
   getLatestSnapshot,
   putSnapshotConditional,
@@ -89,6 +90,16 @@ export async function runUrlCheck(url: MonitoredUrl): Promise<UrlCheckResult> {
       summary: classification.summary,
       diffAdded: diff.added,
       diffRemoved: diff.removed,
+    });
+
+    await dispatchWebhookNotifications({
+      workspaceId: url.workspaceId,
+      competitorName: url.competitorName,
+      url: url.url,
+      urlType: url.urlType,
+      signalType: classification.signalType,
+      importanceScore: classification.importanceScore,
+      summary: classification.summary,
     });
 
     await putSnapshotConditional(url.urlId, newHash, stripped);
