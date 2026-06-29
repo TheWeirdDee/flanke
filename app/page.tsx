@@ -92,7 +92,7 @@ export default function LandingPage() {
 
           <motion.h1 variants={fadeUp} className="text-[42px] lg:text-[50px] leading-[1.1] font-extrabold tracking-tight mb-6 text-white">
             Your competitors are moving. <br/>
-            <span className="text-slate-400">You're not watching.</span> <br/>
+            <span className="text-slate-400">You&apos;re not watching.</span> <br/>
             <span className="inline-flex items-center gap-3">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7ccb9b] to-[#4ab97e]">We can.</span>
               {/* Lottie eye animation next to 'we can' text is made bigger (96x96px) */}
@@ -223,7 +223,7 @@ export default function LandingPage() {
                 Stop checking competitor websites manually.
               </h2>
               <p className="text-[14px] text-slate-400 leading-relaxed mb-6">
-                Paste a URL once. Flanke's crawler runs 24/7, filters noise like timestamps, and finds the exact moment a competitor changes their pricing, features, or positioning.
+                Paste a URL once. Flanke&apos;s crawler runs 24/7, filters noise like timestamps, and finds the exact moment a competitor changes their pricing, features, or positioning.
               </p>
             </div>
 
@@ -326,24 +326,29 @@ export default function LandingPage() {
                 Competitor Analytics
               </span>
               <h2 className="text-3xl font-bold text-white mb-4 leading-tight">
-                Preempt competitor threat velocity.
+                Know when rivals move — before your next call.
               </h2>
               <p className="text-[14px] text-slate-400 leading-relaxed max-w-md">
-                Track change frequency and momentum over 30 days. Flanke calculates a real-time Velocity Score to alert your sales leadership of product updates before they launch.
+                Flanke monitors competitor pages around the clock and plots change frequency as a live Velocity Score. When a competitor accelerates — new pricing, new features, new messaging — your team gets alerted instantly.
               </p>
+              <ul className="mt-6 space-y-2 text-[13px] text-slate-300">
+                <li className="flex items-center gap-2"><span className="text-[#7ccb9b] font-bold">✓</span> 30-day change momentum tracking</li>
+                <li className="flex items-center gap-2"><span className="text-[#7ccb9b] font-bold">✓</span> Real-time Velocity Score alerts</li>
+                <li className="flex items-center gap-2"><span className="text-[#7ccb9b] font-bold">✓</span> Signal classification: pricing, features, talent</li>
+              </ul>
             </div>
 
             {/* Right Column — Lottie Analytics Animation */}
-            <div className="flex-1 min-h-[360px] border-t md:border-t-0 md:border-l border-white/10 relative bg-[#07070a]/70 overflow-hidden flex items-center justify-center">
+            <div className="flex-1 min-h-[420px] md:min-h-[480px] border-t md:border-t-0 md:border-l border-white/10 relative bg-[#07070a]/70 overflow-hidden flex items-center justify-center">
               {/* Mint radial glow behind animation */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-64 h-64 rounded-full blur-[80px] bg-[#7ccb9b]/10" />
+                <div className="w-80 h-80 rounded-full blur-[100px] bg-[#7ccb9b]/12" />
               </div>
-              {/* Lottie animation */}
+              {/* Lottie animation — full panel size */}
               <div
-                className="relative z-10 w-full h-full flex items-center justify-center p-4"
+                className="relative z-10 w-full h-full min-h-[420px] flex items-center justify-center"
                 dangerouslySetInnerHTML={{
-                  __html: `<dotlottie-wc src="https://lottie.host/470d9c6b-6d55-4314-b9d9-aa6aadf1e051/nfKuTIpNmv.lottie" style="width:100%;height:340px;max-width:480px" autoplay loop></dotlottie-wc>`
+                  __html: `<dotlottie-wc src="https://lottie.host/470d9c6b-6d55-4314-b9d9-aa6aadf1e051/nfKuTIpNmv.lottie" style="width:100%;height:100%;min-height:420px" autoplay loop></dotlottie-wc>`
                 }}
               />
             </div>
@@ -423,7 +428,7 @@ export default function LandingPage() {
                   </div>
                   <div className="p-2 rounded bg-emerald-950/10 border border-emerald-500/10">
                     <span className="font-bold text-[#7ccb9b]">Positioning:</span>
-                    <p className="text-slate-400 text-[9px] mt-0.5">Highlight Flanke's live workspace compliance monitoring.</p>
+                    <p className="text-slate-400 text-[9px] mt-0.5">Highlight Flanke&apos;s live workspace compliance monitoring.</p>
                   </div>
                 </div>
               </div>
@@ -531,7 +536,7 @@ export default function LandingPage() {
                 <span className="text-lg font-bold text-white">Flanke</span>
               </Link>
               <p className="text-sm text-slate-400 leading-relaxed max-w-xs mb-8">
-                The real-time competitive intelligence platform for B2B sales teams. Never lose a deal to a competitor's secret move again.
+                The real-time competitive intelligence platform for B2B sales teams. Never lose a deal to a competitor&apos;s secret move again.
               </p>
               
               {/* Newsletter */}
@@ -590,7 +595,16 @@ export default function LandingPage() {
 }
 
 /* ─── HELPER COMPONENTS ───────────────────────────────────────────────── */
-function BriefingRow({ company, signal, color, importance, desc, time }: any) {
+interface BriefingRowProps {
+  company: string;
+  signal: string;
+  color: string;
+  importance: string;
+  desc: string;
+  time: string;
+}
+
+function BriefingRow({ company, signal, color, importance, desc, time }: BriefingRowProps) {
   return (
     <div className="p-4 rounded-2xl bg-[#121216]/50 border border-white/5 backdrop-blur-sm transition-all duration-300 hover:bg-[#16161c]/70 hover:border-white/10 flex flex-col gap-2">
       <div className="flex items-center justify-between">
@@ -612,20 +626,3 @@ function BriefingRow({ company, signal, color, importance, desc, time }: any) {
     </div>
   );
 }
-
-function MockupCard({ type, color, company, desc, time }: any) {
-  return (
-    <div className="p-4 rounded-xl bg-[#121215]/60 border border-white/10 backdrop-blur-sm shadow-md">
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border" style={{ color: color, backgroundColor: `${color}15`, borderColor: `${color}25` }}>
-          {type}
-        </span>
-        <span className="text-xs text-slate-500">{time}</span>
-      </div>
-      <p className="font-bold text-white text-sm">{company}</p>
-      <p className="text-xs text-slate-400 mt-1">{desc}</p>
-    </div>
-  );
-}
-
-
