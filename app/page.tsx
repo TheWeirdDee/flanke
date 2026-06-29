@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Script from "next/script";
 import StepsSection from "@/components/steps-section";
+import CompetitorTelemetry from "@/components/competitor-telemetry";
 import { motion, type Variants } from "framer-motion";
 
 const MINT  = "#7ccb9b";
@@ -338,20 +339,9 @@ export default function LandingPage() {
               </ul>
             </div>
 
-            {/* Right Column — Lottie Analytics Animation */}
+            {/* Right Column — Competitor Live Telemetry Mockup */}
             <div className="flex-1 min-h-[520px] border-t md:border-t-0 md:border-l border-white/10 relative bg-[#060609]/80 overflow-hidden flex items-stretch">
-              {/* Mint radial glow */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-96 h-96 rounded-full blur-[120px] bg-[#7ccb9b]/15" />
-              </div>
-              {/* Lottie — recolored to mint via CSS filter, full panel fill */}
-              <div
-                className="relative z-10 w-full flex items-center justify-center"
-                style={{ filter: "hue-rotate(140deg) saturate(1.4) brightness(0.9)" }}
-                dangerouslySetInnerHTML={{
-                  __html: `<dotlottie-wc src="https://lottie.host/470d9c6b-6d55-4314-b9d9-aa6aadf1e051/nfKuTIpNmv.lottie" style="width:100%;height:520px;display:block" autoplay loop></dotlottie-wc>`
-                }}
-              />
+              <CompetitorTelemetry />
             </div>
           </motion.div>
 
