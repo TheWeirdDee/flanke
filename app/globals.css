@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+:root {
+  /* Base - Light Mode */
+  --color-base: #ffffff;
+  --color-surface: #f8fafc;
+  --color-surface-raised: #ffffff;
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+
+  /* Accent — Deep Indigo / Purple */
+  --color-accent: #6366f1;       /* Indigo 500 */
+  --color-accent-hover: #4f46e5; /* Indigo 600 */
+  --color-accent-muted: #e0e7ff; /* Indigo 100 */
+
+  /* Text - Light Mode */
+  --color-text-primary: #0f172a; /* Slate 900 */
+  --color-text-secondary: #475569; /* Slate 600 */
+  --color-text-muted: #94a3b8; /* Slate 400 */
+  
+  /* Signal type colors */
+  --signal-pricing-up: #f43f5e;
+  --signal-pricing-down: #10b981;
+  --signal-feature: #6366f1;
+  --signal-enterprise: #8b5cf6;
+  --signal-hiring: #f59e0b;
+  --signal-messaging: #ec4899;
+  --signal-unknown: #64748b;
+
+  /* Importance score */
+  --importance-low: #94a3b8;
+  --importance-mid: #f59e0b;
+  --importance-high: #ef4444;
+
+  /* Typography scale */
+  --text-xs: 11px;
+  --text-sm: 13px;
+  --text-base: 15px;
+  --text-lg: 17px;
+  --text-xl: 20px;
+  --text-2xl: 26px;
+  --text-3xl: 32px;
+}
+
+@theme inline {
+  --color-background: var(--color-base);
+  --color-foreground: var(--color-text-primary);
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-base);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--color-base);
+  color: var(--color-text-primary);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  min-height: 100dvh;
+}
